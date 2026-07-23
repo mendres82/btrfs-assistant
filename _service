@@ -11,4 +11,16 @@
     <param name="compression">gz</param>
   </service>
   <service name="set_version" mode="buildtime"/>
+  <service name="download_url">
+    <param name="host">raw.githubusercontent.com</param>
+    <param name="protocol">https</param>
+    <param name="path">/mendres82/btrfs-assistant/refs/heads/main/btrfs-assistant.spec</param>
+    <param name="filename">btrfs-assistant.spec</param>
+  </service>
+  <service name="download_url">
+    <param name="host">raw.githubusercontent.com</param>
+    <param name="protocol">https</param>
+    <param name="path">/mendres82/btrfs-assistant/refs/heads/main/btrfs-assistant.changes</param>
+    <param name="filename">btrfs-assistant.changes</param>
+  </service>
 </services>
