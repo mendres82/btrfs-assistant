@@ -17,7 +17,7 @@
 
 
 Name:           btrfs-assistant
-Version:        2.2
+Version:        0
 Release:        0
 Summary:        Btrfs Assistant
 # FIXME: Select a correct license from https://github.com/openSUSE/spec-cleaner#spdx-licenses
