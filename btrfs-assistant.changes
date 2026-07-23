@@ -1,0 +1,69 @@
+-------------------------------------------------------------------
+Thu Jul 23 11:31:00 UTC 2026 - mendres82 <152789928+mendres82@users.noreply.github.com>
+
+- Switch to obs_scm source service to fetch the latest tagged
+  release from GitLab automatically.
+
+-------------------------------------------------------------------
+Tue Jan  6 12:47:59 UTC 2026 - ecsos <ecsos@opensuse.org>
+
+- Fix build error for Leap 15.6
+
+-------------------------------------------------------------------
+Mon Jun 16 05:19:02 UTC 2025 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Update to version 2.2:
+  * Fix overwriting permissions on xdg-runtime-dir.
+  * Fix free space percentage calculations.
+  * Fix a regression that blocked restoring when booted from an ISO.
+  * Replace the mount library call with the mount command to avoid 
+    corrupting lsblk output.
+  * Fix issues when DISPLAY is not set. 
+
+-------------------------------------------------------------------
+Mon May 20 05:35:00 UTC 2024 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Update to version 2.1.1:
+  * Fix btrfs-assistant script regression impacting wlroots. 
+
+-------------------------------------------------------------------
+Mon May 13 02:41:01 UTC 2024 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Update to version 2.1:
+  * No chagelog. 
+
+-------------------------------------------------------------------
+Mon Mar 11 03:26:26 UTC 2024 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Update to version 2.0:
+  * Ported to Qt 6.
+  * Added percentage value display for filesystem utilization.
+  * CLI snapshots are now restored via an index to make the process 
+    more user friendly.
+
+-------------------------------------------------------------------
+Mon Jan 15 05:07:09 UTC 2024 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Update to version 1.9:
+  * Improve CSV parsing.
+  * Added the ability to modify Snapper snapshot descriptions.
+  * Added support for QT_STYLE_OVERRIDE. 
+
+-------------------------------------------------------------------
+Tue Feb 14 16:21:27 UTC 2023 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Update to version 1.8:
+  * Add support for handling snapshots of the root of the btrfs partition.
+  * Add the ability to autodetect the subvolume mounted at /.snapshots
+  * Display the cleanup algorithm on the list of Snapper snapshots. 
+
+-------------------------------------------------------------------
+Sun Jan 22 12:31:08 UTC 2023 - Dead Mozay <dead-mozay@opensuse.org>
+
+- Update to version 1.7:
+  *  Fix browse and restore buttons not being disabled initially. 
+
+-------------------------------------------------------------------
+Tue Oct 11 04:33:11 UTC 2022 - Dead Mozay <dead_mozay@opensuse.org>
+
+- Initial package. 
