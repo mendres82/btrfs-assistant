@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Aug 17 08:53:00 UTC 2026 - mendres82 <152789928+mendres82@users.noreply.github.com>
+
+- Package Qt translation files installed under
+  %{_datadir}/btrfs-assistant/translations/.
+
+-------------------------------------------------------------------
 Thu Jul 23 11:31:00 UTC 2026 - mendres82 <152789928+mendres82@users.noreply.github.com>
 
 - Switch to obs_scm source service to fetch the latest tagged

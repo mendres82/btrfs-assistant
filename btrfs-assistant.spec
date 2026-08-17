@@ -92,6 +92,9 @@ export CXX=g++-13
 %config(noreplace) %{_sysconfdir}/btrfs-assistant.conf
 %{_datadir}/applications/btrfs-assistant.desktop
 %{_datadir}/metainfo/btrfs-assistant.metainfo.xml
+%dir %{_datadir}/btrfs-assistant
+%dir %{_datadir}/btrfs-assistant/translations
+%{_datadir}/btrfs-assistant/translations/*.qm
 %dir %{_datadir}/polkit-1/
 %dir %{_datadir}/polkit-1/actions/
 %{_datadir}/polkit-1/actions/org.btrfs-assistant.pkexec.policy
