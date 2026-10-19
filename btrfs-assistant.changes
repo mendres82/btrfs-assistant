@@ -1,12 +1,15 @@
 -------------------------------------------------------------------
-Mon Oct 19 10:15:00 UTC 2026 - mendres82 <152789928+mendres82@users.noreply.github.com>
+Mon Oct 19 10:25:00 UTC 2026 - mendres82 <152789928+mendres82@users.noreply.github.com>
 
 - Update packaging for upstream 3.0.0:
   * Drop obsolete sed patches for removed launcher scripts.
   * Build with Qt6 DBus and install the privileged helper,
     systemd unit, D-Bus activation/policy, and new polkit
     policy (org.btrfsassistant.policy).
-  * Remove the old pkexec polkit action from the file list.
+  * Split translations into a -lang subpackage.
+  * Run %ctest in %check.
+  * Use systemd service scriptlets without restarting the
+    helper on upgrade (see upstream docs/packaging.md).
 
 -------------------------------------------------------------------
 Mon Aug 17 08:53:00 UTC 2026 - mendres82 <152789928+mendres82@users.noreply.github.com>

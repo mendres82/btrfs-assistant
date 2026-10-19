@@ -68,8 +68,10 @@ A front-end for Btrfs Maintenance
 Manage systemd units
 Easily manage configuration for defrag, balance and srub settings
 
+%lang_package
+
 %prep
-%autosetup
+%autosetup -p1
 
 %build
 %if 0%{?suse_version} < 1600
@@ -84,33 +86,48 @@ export CXX=g++-13
 %install
 %cmake_install
 
-# Do not restart or stop btrfs-assistant-helper from package scripts; it may be
+%check
+%ctest
+
+%find_lang btrfsassistant --with-qt
+
+# Do not restart or stop the helper from package scripts; it may be
 # mid-operation and exits on its own when idle (see docs/packaging.md).
+
+%pre
+%service_add_pre %{name}-helper.service
+
+%post
+%service_add_post %{name}-helper.service
+
+%preun
+%systemd_preun %{name}-helper.service
+
+%postun
+%service_del_postun %{name}-helper.service
 
 %files
 %license LICENSE
 %doc README.md changelog
 %{_bindir}/btrfs-assistant
-%dir %{_prefix}/lib/btrfs-assistant
-%{_prefix}/lib/btrfs-assistant/btrfs-assistant-helper
-%{_unitdir}/btrfs-assistant-helper.service
 %config(noreplace) %{_sysconfdir}/btrfs-assistant.conf
 %{_datadir}/applications/btrfs-assistant.desktop
 %{_datadir}/metainfo/btrfs-assistant.metainfo.xml
-%dir %{_datadir}/btrfs-assistant
-%dir %{_datadir}/btrfs-assistant/translations
-%{_datadir}/btrfs-assistant/translations/*.qm
-%dir %{_datadir}/dbus-1
-%dir %{_datadir}/dbus-1/system-services
-%{_datadir}/dbus-1/system-services/org.btrfsassistant.Helper1.service
-%dir %{_datadir}/dbus-1/system.d
 %{_datadir}/dbus-1/system.d/org.btrfsassistant.Helper1.conf
-%dir %{_datadir}/polkit-1
-%dir %{_datadir}/polkit-1/actions
+%{_datadir}/dbus-1/system-services/org.btrfsassistant.Helper1.service
+%dir %{_prefix}/lib/btrfs-assistant/
+%{_prefix}/lib/btrfs-assistant/btrfs-assistant-helper
+%{_unitdir}/btrfs-assistant-helper.service
+%dir %{_datadir}/polkit-1/
+%dir %{_datadir}/polkit-1/actions/
 %{_datadir}/polkit-1/actions/org.btrfsassistant.policy
 %dir %{_datadir}/icons/hicolor
 %dir %{_datadir}/icons/hicolor/scalable
 %dir %{_datadir}/icons/hicolor/scalable/apps
-%{_datadir}/icons/hicolor/scalable/apps/btrfs-assistant.svg
+%{_datadir}/icons/*/*/*/*.svg
+
+%files lang -f btrfsassistant.lang
+%dir %{_datadir}/btrfs-assistant/
+%dir %{_datadir}/btrfs-assistant/translations/
 
 %changelog
