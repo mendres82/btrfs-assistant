@@ -20,23 +20,25 @@ Name:           btrfs-assistant
 Version:        0
 Release:        0
 Summary:        Btrfs Assistant
-# FIXME: Select a correct license from https://github.com/openSUSE/spec-cleaner#spdx-licenses
-License:        GPL-3.0+
+License:        GPL-3.0-or-later
 URL:            https://gitlab.com/btrfs-assistant/btrfs-assistant
 Source:         %{name}-%{version}.tar.gz
 BuildRequires:  cmake
 %if 0%{?suse_version} < 1600
-BuildRequires: gcc13
-BuildRequires: gcc13-c++
+BuildRequires:  gcc13
+BuildRequires:  gcc13-c++
 %else
-BuildRequires: gcc
-BuildRequires: gcc-c++
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 %endif
 BuildRequires:  libbtrfs-devel
 BuildRequires:  libbtrfsutil-devel
+BuildRequires:  pkgconfig(systemd)
 BuildRequires:  cmake(Qt6Core)
+BuildRequires:  cmake(Qt6DBus)
 BuildRequires:  cmake(Qt6Widgets)
 BuildRequires:  cmake(Qt6LinguistTools)
+Requires:       polkit
 
 %description
 Btrfs Assistant is a GUI management tool to make managing a Btrfs filesystem easier.  The primary features it offers are:
@@ -68,10 +70,6 @@ Easily manage configuration for defrag, balance and srub settings
 
 %prep
 %autosetup
-sed -i -e '1d;2i#!/usr/bin/bash' src/btrfs-assistant
-sed -i -e '1d;2i#!/usr/bin/bash' src/btrfs-assistant-launcher
-# via https://gitlab.com/btrfs-assistant/btrfs-assistant/-/commit/edc0a13bac5189a1a910f5adab01b2d5b60c76f6
-sed -i -e 's/-Werror\ //' src/CMakeLists.txt
 
 %build
 %if 0%{?suse_version} < 1600
@@ -79,28 +77,40 @@ export CC=gcc-13
 export CXX=g++-13
 %endif
 %cmake \
- -DCMAKE_BUILD_TYPE=Release
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBTRFS_ASSISTANT_SYSTEMD_UNIT_DIR=%{_unitdir}
 %cmake_build
 
 %install
 %cmake_install
 
+# Do not restart or stop btrfs-assistant-helper from package scripts; it may be
+# mid-operation and exits on its own when idle (see docs/packaging.md).
+
 %files
 %license LICENSE
 %doc README.md changelog
-%{_bindir}/btrfs-assistant*
+%{_bindir}/btrfs-assistant
+%dir %{_prefix}/lib/btrfs-assistant
+%{_prefix}/lib/btrfs-assistant/btrfs-assistant-helper
+%{_unitdir}/btrfs-assistant-helper.service
 %config(noreplace) %{_sysconfdir}/btrfs-assistant.conf
 %{_datadir}/applications/btrfs-assistant.desktop
 %{_datadir}/metainfo/btrfs-assistant.metainfo.xml
 %dir %{_datadir}/btrfs-assistant
 %dir %{_datadir}/btrfs-assistant/translations
 %{_datadir}/btrfs-assistant/translations/*.qm
-%dir %{_datadir}/polkit-1/
-%dir %{_datadir}/polkit-1/actions/
-%{_datadir}/polkit-1/actions/org.btrfs-assistant.pkexec.policy
+%dir %{_datadir}/dbus-1
+%dir %{_datadir}/dbus-1/system-services
+%{_datadir}/dbus-1/system-services/org.btrfsassistant.Helper1.service
+%dir %{_datadir}/dbus-1/system.d
+%{_datadir}/dbus-1/system.d/org.btrfsassistant.Helper1.conf
+%dir %{_datadir}/polkit-1
+%dir %{_datadir}/polkit-1/actions
+%{_datadir}/polkit-1/actions/org.btrfsassistant.policy
 %dir %{_datadir}/icons/hicolor
 %dir %{_datadir}/icons/hicolor/scalable
 %dir %{_datadir}/icons/hicolor/scalable/apps
-%{_datadir}/icons/*/*/*/*.svg
+%{_datadir}/icons/hicolor/scalable/apps/btrfs-assistant.svg
 
 %changelog
